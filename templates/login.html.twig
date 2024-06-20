@@ -1,0 +1,18 @@
+{% extends '_layouts/vertical-centered.html.twig' %}
+
+{% block title %}Connecte toi{% endblock %}
+
+
+{% block pageContent %}
+
+
+    {% if app.environment != "prod" %}
+        <div class="alert alert-info">Utiliser <strong>demo</strong>, <strong>azeaze</strong> pour se connecter avec l'utilisateur de démo.</div>
+    {% endif %}
+
+    {% include "security/login-form.html.twig" %}
+
+    <a href="{{ path('app_register') }}">
+        Je n'ai pas encore de compte
+    </a>
+{% endblock %}

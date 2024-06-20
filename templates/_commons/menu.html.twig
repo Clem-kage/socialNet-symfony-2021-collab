@@ -1,0 +1,83 @@
+    <nav class="fixed-top navbar navbar-dark bg-primary navbar-expand-lg">
+    <a class="navbar-brand" href="{{ url('app_homepage') }}">
+        {% include "_commons/logo.html.twig" %}
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('app_homepage') }}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('app_users_list') }}">Nos membres</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('app_post_create') }}">Nouveau Post</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('app_about') }}">About</a>
+            </li>
+{#            <li class="nav-item">#}
+{#                <a class="nav-link" href="{{ url('app_search') }}">Search</a>#}
+{#            </li>#}
+        </ul>
+
+        <nav class="navbar">
+            {{ render(controller(
+                'App\\Controller\\PageController::searchBar'
+            )) }}
+        </nav>
+
+        {% if is_granted('ROLE_USER') %}
+
+            <div class="btn-group dropleft show">
+                <button type="button" class="btn btn-primary dropdown-toggle display-drop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="bi bi-app-indicator"></i>
+                    <span class="text-warning countnotif">
+                        {{ app.user.notifs | length }}
+                    </span>
+                </button>
+                <div class="dropdown-menu dropdown menu-notif" style="overflow-y: scroll;height: auto;">
+                    <div class="container">
+                    {% include "/user/notif.html.twig" %}
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Welcome {{ app.user.username }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ path("app_user_profile", { username: app.user.username }) }}">Profile</a>
+                    <a class="dropdown-item" href="#">Settings</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-danger" href="{{ path("app_logout") }}">Log out</a>
+                </div>
+            </div>
+        {% else %}
+            <a class="text-light" href="{{ path("app_login") }}">Log in</a>
+        {% endif %}
+    </div>
+</nav>

@@ -1,0 +1,125 @@
+{% extends "_layouts/page-two-cols.html.twig" %}
+
+{% block title %}
+    Page de profil de {{ user.username }}
+{% endblock %}
+
+{% block header %}
+
+     {# On inclut le contenu du block "header" qui a déjà été défini dans le template parent #}
+    {{ parent() }}
+
+    <div class="jumbotron profile-jumbo text-light" style="background-image: url(https://picsum.photos/seed/{{ user.username }}/1080);">
+
+        <div class="container pb-5">
+            <h1 class="display-4">
+                {% if user.id == app.user.id %}
+                    C'est ton profil
+                {% else %}
+                    Page de profil de {{ user.username }}
+                {% endif %}
+            </h1>
+            <p class="lead">{{ user.followings | length}} Followers - {{ user.posts | length }} Posts</p>
+            <hr class="my-4">
+            <p>Inscrit depuis le {{ user.createdAt | date("d/m/Y") }}</p>
+
+{#            {% if user.id == app.user.id %}#}
+            {% if user == app.user %}
+                <button class="btn btn-primary">Editer mon profil</button>
+            {% else %}
+                <a href="{{ path('app_relationship', {id:user.id})  }}">
+                    {% if app.user in user.followings %}
+                        <i class="bi bi-person-x btn-lg btn-danger"></i>
+                    {% else %}
+                        <i class="bi bi-person-plus btn-lg btn-primary"></i>
+                    {% endif %}
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+{% block mainContent %}
+
+    <div class="profile-picture-container">
+        {% include "user/user-avatar.html.twig" %}
+    </div>
+
+    {% if user == app.user %}
+        <h2>Tes messages</h2>
+    {% else %}
+        <h2> Les messages de {{ user.username }} </h2>
+    {% endif %}
+
+
+    {% if app.user.canSeePostsOf(user) %}
+        {% include "post/post-list.html.twig"  %}
+    {% else %}
+        <a
+            class="btn-lg btn-primary"
+            href="{{ path('app_relationship', {id:user.id})  }}"
+        >
+            Deviens ami avec {{ user.username }}
+            <i class="bi bi-person-plus "></i>
+        </a>
+
+
+    {% endif %}
+
+
+
+
+{% endblock %}
+
+
+{% block sidebarContent %}
+    {% if user == app.user %}
+        <h2>Tu es suivi par :</h2>
+    {% else %}
+        <h2>{{ user.username }} est suivi par :</h2>
+    {% endif %}
+
+    {% for follower in user.followers %}
+        {% include "user/user-avatar.html.twig" with {
+            user: follower,
+        } %}
+        <a href="{{ path('app_user_profile', { username: follower.username}) }}">
+            {{ follower.username }}
+            <br>
+        </a>
+    {% else %}
+        Ajouter une relation !
+    {% endfor %}
+
+
+    {% if user == app.user %}
+        <h2>Tu suis :</h2>
+    {% else %}
+        <h2>{{ user.username }} suit :</h2>
+    {% endif %}
+
+    {% for following in user.followings %}
+        {% include "user/user-avatar.html.twig" with {
+            user: following,
+        } %}
+        <a
+                href="{{ path('app_user_profile', { username: following.username}) }}"
+        >
+            {{ following.username }}
+            <br>
+        </a>
+    {% else %}
+        Se faire connaitre
+    {% endfor %}
+
+
+    {% if user == app.user %}
+        <h2>Tes infos de profil</h2>
+        {{ form(editForm) }}
+    {% endif %}
+
+
+{% endblock %}

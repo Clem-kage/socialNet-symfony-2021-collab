@@ -1,0 +1,48 @@
+<div class="card post" id="post-{{ post.id }}">
+    <div class="card-header">
+
+        <div class="d-flex align-items-center">
+            <a href="{{ path('app_user_profile', { username: post.author.username }) }}" class="mr-2">
+                {% include "user/user-avatar.html.twig" with { user: post.author } %}
+            </a>
+            <span>
+                <a href="{{ path('app_post_read', { id: post.id }) }}">
+                    #{{ post.id }}
+                </a> by
+
+                <a href="{{ path('app_user_profile', { username: post.author.username }) }}">
+                    <strong>{{ post.author }}</strong>
+                </a>
+
+            </span>
+
+        </div>
+
+        <div>
+            Publié le {{ post.createdAt | date('d/m/Y à h:i:s') }}
+        </div>
+    </div>
+
+    <div class="card-body">
+        <p class="card-text">
+            {{ post.content }}
+        </p>
+    </div>
+
+    <div class="card-footer post-footer">
+        <a href="{{ path('app_post_read', { id: post.id }) }}" class="comments">
+            <i class="bi-chat" role="img" aria-label="Nombres de commentaires"></i>
+
+{#             TODO optimiser la requete de la homepage pour inclure directement le nombre de commentaires dedans !#}
+            <span>{{ post.commentsCount }}</span>
+        </a>
+
+        <a
+                href="{{ path('app_post_like_toggle', { id: post.id }) }}"
+                class="btn-like"
+                data-post="{{ post.id }}"
+        >
+            {% include "post/post-likes.html.twig" %}
+        </a>
+    </div>
+</div>

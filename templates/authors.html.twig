@@ -1,0 +1,22 @@
+{% extends "_layouts/page-one-col.html.twig" %}
+
+{% block title %}
+    Nos utilisateurs
+{% endblock %}
+
+
+{% block mainContent %}
+
+    <h1>Liste des membres de Post'It</h1>
+
+    <ul>
+        {% for member in authorsList %}
+            <li>
+                <a href="{{ path('app_user_profile', { username: member.username }) }}">
+                    {{ member.fullName }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

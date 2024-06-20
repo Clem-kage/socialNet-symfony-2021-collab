@@ -1,0 +1,43 @@
+{% extends "_layouts/page-two-cols.html.twig" %}
+
+
+{% block title %}
+    Post #{{post.id}}
+{% endblock %}
+
+{% block header %}
+    {{ parent() }}
+
+    <div class="jumbotron">
+        <div class="container">
+            {% include "post/post.html.twig" %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block mainContent %}
+    <h2>Les commentaires</h2>
+
+    {% for comment in comments %}
+
+        {% include "post/post.html.twig" with { post: comment } %}
+    {% else %}
+        {% if post.author.isFollowedBy(app.user) %}
+            <a href="" class="btn btn-primary">
+                Sois le premier à commenter
+            </a>
+        {% else %}
+            <a href="{{ path('app_user_profile',{username:post.author.username}) }}" class="btn btn-primary">
+                Deviens ami avec {{ post.author.username }}
+            </a>
+        {% endif %}
+    {% endfor %}
+
+
+{% endblock %}
+
+{% block sidebarContent %}
+    <h2>Commente ce post</h2>
+
+    {{ form(commentForm) }}
+{% endblock %}

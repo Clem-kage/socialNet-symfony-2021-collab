@@ -1,0 +1,17 @@
+{% for notifs in app.user.notifs | reverse %}
+
+    <div class="card  mb-2 shadow-sm"  style="width: 18rem;">
+        <a class="card-header text-right delete bg-primary text-dark p-1 pr-2"
+           data-notif="{{ notifs.id }}"
+           href="{{ path('app_deletenotif', { id: notifs.id }) }}">
+            <i class="bi bi-x-lg text-white"></i>
+        </a>
+        <div class="card-body">
+            <p class="card-text">
+                <a href="{{ path("app_user_profile", { username : notifs.origin.username }) }}">
+                    {{ notifs.origin }}
+                </a> {{ notifs.getTextContent }}
+            </p>
+        </div>
+    </div>
+{% endfor %}

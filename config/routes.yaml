@@ -1,0 +1,8 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+
+app_configured_route:
+  path: /with-config
+  controller: App\Controller\IntroController::routeWithConfig

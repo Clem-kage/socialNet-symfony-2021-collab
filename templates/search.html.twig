@@ -1,0 +1,92 @@
+{% extends "_layouts/page-one-col.html.twig" %}
+
+{% block title %}
+    Moogle
+{% endblock %}
+
+{% block header %}
+    {{ parent() }}
+    <div class="jumbotron">
+        {% include "_commons/searchbar.html.twig"  %}
+    </div>
+{% endblock %}
+
+{% block mainContent %}
+    {% if (results is null and resultPosts is null) %}
+{#        <div>Balance ton mot</div>#}
+    {% else %}
+        {% if (results is empty and resultPosts is empty) %}
+            <h2 class="d-flex w-100 justify-content-center">
+                Aucun résultat, cherchez avec un autre mot
+                <i class="bi bi-emoji-sunglasses ml-2"></i>
+            </h2>
+        {% else %}
+            <h4 class="d-flex">
+                {% if (results|length <= 1) %}
+                    {{ results | length }} User trouvé |
+                {% else %}
+                    {{ results | length }} Users trouvés |
+                {% endif %}
+
+                {% if (resultPosts|length <= 1) %}
+                    {{ resultPosts | length }} Post trouvé
+                {% else %}
+                    {{ resultPosts | length }} Posts trouvés
+                {% endif %}
+            </h4>
+            <div>
+                <div class="row row-cols-2 row-cols-md-4">
+                    {% for result in results %}
+                        <div class="col mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="d-flex justify-content-around align-items-center">
+                                        {% include 'user/user-avatar.html.twig' with { user: result } %}
+                                        <h5 class="card-title m-0">
+                                            {{ result.username }}
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <a href="{{ path('app_user_profile', { username: result.username }) }}"
+                                       class="btn btn-primary w-100">
+                                        Page de {{ result.fullName }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+{#                    TODO : limiter le nombre de posts à afficher sur la 1ere page #}
+                    {% for resultPost in resultPosts %}
+                        <div class="col mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title m-0">
+                                        <a href="{{ path('app_post_read', { id: resultPost.id }) }}">
+                                            #{{ resultPost.id }}
+                                        </a>
+                                        by
+                                        <a href="{{ path('app_user_profile', { username: resultPost.author.username }) }}">
+                                            {{ resultPost.author.username }}
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <p class="m-0">
+                                        {{ resultPost.content|length > 60 ? resultPost.content|slice(0, 60) ~ '...' : resultPost.content }}
+                                    </p>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="text-secondary">
+                                        Publié le
+                                        {{ resultPost.createdAt | date('d/m/Y à h:i:s') }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}

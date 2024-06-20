@@ -1,0 +1,16 @@
+{% extends "_layouts/page-one-col.html.twig" %}
+
+{% block title %}
+    Mettre à jour le Post #{{post.id}}
+{% endblock %}
+
+
+{% block mainContent %}
+
+    <h1>
+        Mettre à jour le Post #{{post.id}}
+    </h1>
+
+    {{ form(updateForm) }}
+
+{% endblock %}

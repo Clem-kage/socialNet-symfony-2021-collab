@@ -1,0 +1,20 @@
+{% if error %}
+    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+
+
+{% if app.user %}
+    <div class="mb-3">
+        You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+    </div>
+{% endif %}
+
+{{ form_start(loginForm) }}
+    {{ form_row(loginForm.username, { value: last_username }) }}
+    {{ form_row(loginForm.password) }}
+
+    <button class="btn btn-block btn-primary" type="submit">
+        Sign in
+    </button>
+
+{{ form_end(loginForm) }}

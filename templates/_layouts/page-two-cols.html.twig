@@ -1,0 +1,16 @@
+{% extends "_layouts/page.html.twig" %}
+
+{% block pageContent %}
+
+    <div class="row">
+
+        <main class="col-8">
+            {% block mainContent %}{% endblock %}
+        </main>
+
+        <aside class="col-4">
+            {% block sidebarContent %}{% endblock %}
+        </aside>
+
+    </div>
+{% endblock %}

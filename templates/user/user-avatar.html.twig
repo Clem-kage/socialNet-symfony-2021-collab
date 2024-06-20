@@ -1,0 +1,13 @@
+{% if user.profilePicture %}
+    <img
+        src="{{ asset('uploads/pictures/' ~ user.profilePicture) }}"
+        alt="Image de profil de {{ user.username }}"
+        class="rounded-circle user-avatar"
+    >
+{% else %}
+    <img
+        src="{{ path('app_generate', { username: user.username, save: false }) }}"
+        alt="Image de profil de {{ user.username }}"
+        class="rounded-circle user-avatar"
+    >
+{% endif %}

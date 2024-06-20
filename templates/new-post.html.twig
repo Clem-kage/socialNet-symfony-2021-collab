@@ -1,0 +1,30 @@
+{% extends "_layouts/page-one-col.html.twig" %}
+
+{% block title %}
+    Exprime toi !
+{% endblock %}
+
+
+
+{% block header %}
+
+    {# On inclut le contenu du block "header" qui a déjà été défini dans le template parent #}
+    {{ parent() }}
+
+    <div class="jumbotron">
+
+        <div class="container">
+            <h1 class="display-4">
+                Exprime toi !
+            </h1>
+            <p class="lead">Dis un truc intéressant</p>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block mainContent %}
+
+    {{ form(postForm) }}
+{% endblock %}

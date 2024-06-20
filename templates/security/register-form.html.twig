@@ -1,0 +1,40 @@
+{% for flashError in app.flashes('verify_email_error') %}
+    <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+{% endfor %}
+
+{{ form_start(registrationForm) }}
+
+    <div class="test">
+
+        {{ form_label(registrationForm.username) }}
+
+        <div class="test2">
+            {{ form_widget(registrationForm.username, { attr: { placeholder: "Toto" }}) }}
+        </div>
+            {{ form_help(registrationForm.username) }}
+    </div>
+
+    {{ form_row(registrationForm.plainPassword, {
+        label: 'Password'
+    }) }}
+
+    {{ form_row(registrationForm.fullName) }}
+
+    <div class="row">
+        <div class="col">
+            {{ form_row(registrationForm.email) }}
+        </div>
+        <div class="col">
+            {{ form_row(registrationForm.phone) }}
+        </div>
+    </div>
+
+
+    {{ form_row(registrationForm.picture) }}
+
+    {{ form_row(registrationForm.birthdate) }}
+
+    {{ form_row(registrationForm.agreeTerms)  }}
+
+    <button type="submit" class="btn">Register</button>
+{{ form_end(registrationForm) }}

@@ -1,0 +1,25 @@
+{% extends "_layouts/page-one-col.html.twig" %}
+
+{% block title %}
+    Mentions légales
+{% endblock %}
+
+{% block mainContent %}
+    <h1>Mentions légales</h1>
+
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab amet asperiores commodi, cum delectus dolore doloribus esse, expedita, in incidunt ipsa maxime odio quas soluta vel. Incidunt obcaecati pariatur placeat?
+    </p>
+
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis ea laborum porro tempora. Accusantium, animi cupiditate distinctio ea error id illum impedit possimus quia quibusdam sequi sunt voluptatum. Repudiandae, ut?
+    </p>
+    <p>
+        <a href="{{ url('app_homepage') }}">Retour à la page d'accueil</a>
+        <a href="/go-to-infrep">Aller sur le site de l'infrep</a>
+    </p>
+{% endblock %}
+
+{% block footer %}
+    {# On vide le block, car on ne veut pas de footer sur cette page #}
+{% endblock %}

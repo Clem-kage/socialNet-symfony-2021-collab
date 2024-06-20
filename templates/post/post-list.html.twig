@@ -1,0 +1,30 @@
+<ul style="list-style:none; padding:0" class="postList">
+    {% if posts is empty %}
+        <li>
+            Cette liste est vide !
+        </li>
+    {% else %}
+        {% for post in posts %}
+            <li class="mb-3">
+                {% include "post/post.html.twig" %}
+            </li>
+        {% endfor %}
+
+        {% if app.request.get('_route') is same as('app_homepage') %}
+            <li>
+                <div class="spinner-border spinner hidden"
+                     role="status"
+                     data-load=""
+                ></div>
+            </li>
+        {% elseif app.request.get('_route') is same as('app_user_profile') %}
+            <li>
+                <div class="spinner-border spinner hidden"
+                     role="status"
+                     data-load="{{ user.id }}"
+                ></div>
+            </li>
+        {% endif %}
+
+    {% endif %}
+</ul>
